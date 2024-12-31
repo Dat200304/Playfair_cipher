@@ -1,16 +1,14 @@
-﻿// File: Form1.cs
-using System;
+﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace Playfair_cipher
 {
     public partial class Form1 : Form
     {
-        private char[,] keyTable = new char[5, 5];
+        private char[,] keyTable;
+        private int matrixSize = 5; // Mặc định là 5x5
 
         public Form1()
         {
@@ -24,31 +22,63 @@ namespace Playfair_cipher
             button1.Click += (sender, e) => Encrypt();
             button2.Click += (sender, e) => Decrypt();
             button3.Click += (sender, e) => ClearTextBoxes();
+
+            // Khởi tạo ComboBox
+            comboBox1.Items.Add("5x5");
+            comboBox1.Items.Add("6x6");
+            comboBox1.SelectedIndex = 0; // Mặc định chọn 5x5
+
+            comboBox1.SelectedIndexChanged += (sender, e) => UpdateMatrixSize();
+        }
+        private void UpdateMatrixSize()
+        {
+            if (comboBox1.SelectedItem.ToString() == "5x5")
+            {
+                matrixSize = 5;
+            }
+            else if (comboBox1.SelectedItem.ToString() == "6x6")
+            {
+                matrixSize = 6;
+            }
         }
 
         private void GenerateKeyTable(string key)
         {
-            char[] alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ".ToCharArray(); // Không bao gồm J
-            Regex rgx = new Regex("[^A-Z]");
+            char[] alphabet;
+
+            if (matrixSize == 5)
+            {
+                alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ".ToCharArray(); // Không bao gồm J
+            }
+            else // 6x6
+            {
+                alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
+            }
+
+            Regex rgx = new Regex("[^A-Z0-9]");
             key = rgx.Replace(key.ToUpper(), ""); // Xóa các ký tự không hợp lệ
-            key = new string(key.Distinct().ToArray()); // Loại bỏ ký tự trùng
+            key = new string(key.Distinct().ToArray()); // Loại bỏ ký tự trùng nhưng giữ nguyên thứ tự
 
             // Loại bỏ các ký tự trong key ra khỏi bảng alphabet
             foreach (char c in key)
                 alphabet = alphabet.Where(x => x != c).ToArray();
 
+            // Tạo chuỗi key đầy đủ (key + các ký tự còn lại trong alphabet)
             string keyString = key + new string(alphabet);
 
+            // Điều chỉnh kích thước keyTable
+            keyTable = new char[matrixSize, matrixSize];
+
             // Điền vào keyTable
-            for (int i = 0; i < 5; i++)
-                for (int j = 0; j < 5; j++)
-                    keyTable[i, j] = keyString[i * 5 + j];
+            for (int i = 0; i < matrixSize; i++)
+                for (int j = 0; j < matrixSize; j++)
+                    keyTable[i, j] = keyString[i * matrixSize + j];
 
             // Hiển thị bảng mã trong textBox2
             string keyMatrix = "";
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < matrixSize; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < matrixSize; j++)
                 {
                     keyMatrix += keyTable[i, j] + " ";
                 }
@@ -57,11 +87,18 @@ namespace Playfair_cipher
             textBox2.Text = keyMatrix;
         }
 
+
+
+
+
         private string ProcessText(string input, bool isEncrypt)
         {
-            Regex rgx = new Regex("[^A-Z]");
-            input = rgx.Replace(input.ToUpper(), ""); // Chỉ giữ chữ cái
-            input = input.Replace('J', 'I'); // Thay thế J bằng I
+            Regex rgx = new Regex("[^A-Z0-9]");
+            input = rgx.Replace(input.ToUpper(), ""); // Chỉ giữ chữ cái và số nếu cần
+            if (matrixSize == 5)
+            {
+                input = input.Replace('J', 'I'); // Thay thế J bằng I
+            }
 
             // Nếu số ký tự lẻ, thêm 'X'
             if (input.Length % 2 != 0) input += "X";
@@ -73,18 +110,18 @@ namespace Playfair_cipher
             {
                 int indexA = keyString.IndexOf(input[i]);
                 int indexB = keyString.IndexOf(input[i + 1]);
-                int rowA = indexA / 5, colA = indexA % 5;
-                int rowB = indexB / 5, colB = indexB % 5;
+                int rowA = indexA / matrixSize, colA = indexA % matrixSize;
+                int rowB = indexB / matrixSize, colB = indexB % matrixSize;
 
                 if (colA == colB) // Cùng cột
                 {
-                    result += keyTable[(rowA + (isEncrypt ? 1 : -1) + 5) % 5, colA];
-                    result += keyTable[(rowB + (isEncrypt ? 1 : -1) + 5) % 5, colB];
+                    result += keyTable[(rowA + (isEncrypt ? 1 : -1) + matrixSize) % matrixSize, colA];
+                    result += keyTable[(rowB + (isEncrypt ? 1 : -1) + matrixSize) % matrixSize, colB];
                 }
                 else if (rowA == rowB) // Cùng hàng
                 {
-                    result += keyTable[rowA, (colA + (isEncrypt ? 1 : -1) + 5) % 5];
-                    result += keyTable[rowB, (colB + (isEncrypt ? 1 : -1) + 5) % 5];
+                    result += keyTable[rowA, (colA + (isEncrypt ? 1 : -1) + matrixSize) % matrixSize];
+                    result += keyTable[rowB, (colB + (isEncrypt ? 1 : -1) + matrixSize) % matrixSize];
                 }
                 else // Thành hình chữ nhật
                 {
@@ -95,6 +132,7 @@ namespace Playfair_cipher
 
             return result;
         }
+
 
         private void Encrypt()
         {

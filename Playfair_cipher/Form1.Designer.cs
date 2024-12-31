@@ -43,6 +43,7 @@ namespace Playfair_cipher
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            comboBox1 = new ComboBox();
             SuspendLayout();
             // 
             // textBox1
@@ -56,13 +57,13 @@ namespace Playfair_cipher
             // 
             // textBox2
             // 
-            textBox2.BackColor = SystemColors.Info;
+            textBox2.BackColor = SystemColors.ControlLight;
             textBox2.Font = new System.Drawing.Font("Segoe UI", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox2.Location = new Point(39, 129);
             textBox2.Margin = new Padding(3, 4, 3, 4);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(240, 288);
+            textBox2.Size = new Size(286, 329);
             textBox2.TabIndex = 1;
             // 
             // textBox3
@@ -76,7 +77,7 @@ namespace Playfair_cipher
             // 
             // textBox4
             // 
-            textBox4.BackColor = Color.LightYellow;
+            textBox4.BackColor = SystemColors.ControlLight;
             textBox4.Location = new Point(490, 249);
             textBox4.Margin = new Padding(3, 4, 3, 4);
             textBox4.Multiline = true;
@@ -87,7 +88,8 @@ namespace Playfair_cipher
             // button1
             // 
             button1.BackColor = Color.DimGray;
-            button1.Location = new Point(331, 135);
+            button1.ForeColor = SystemColors.ButtonHighlight;
+            button1.Location = new Point(331, 193);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(121, 59);
@@ -98,7 +100,8 @@ namespace Playfair_cipher
             // button2
             // 
             button2.BackColor = SystemColors.ControlDarkDark;
-            button2.Location = new Point(331, 238);
+            button2.ForeColor = SystemColors.ButtonHighlight;
+            button2.Location = new Point(331, 278);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Size = new Size(121, 59);
@@ -109,7 +112,8 @@ namespace Playfair_cipher
             // button3
             // 
             button3.BackColor = SystemColors.ControlDarkDark;
-            button3.Location = new Point(331, 343);
+            button3.ForeColor = SystemColors.ButtonHighlight;
+            button3.Location = new Point(331, 358);
             button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
             button3.Size = new Size(121, 59);
@@ -153,11 +157,20 @@ namespace Playfair_cipher
             label4.TabIndex = 10;
             label4.Text = "KEY MATRIX";
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(331, 129);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 28);
+            comboBox1.TabIndex = 11;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1024, 458);
+            Controls.Add(comboBox1);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -189,5 +202,6 @@ namespace Playfair_cipher
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private ComboBox comboBox1;
     }
 }
