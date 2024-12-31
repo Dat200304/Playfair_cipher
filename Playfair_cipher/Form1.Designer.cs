@@ -58,17 +58,17 @@ namespace Playfair_cipher
             // textBox2
             // 
             textBox2.BackColor = SystemColors.ControlLight;
-            textBox2.Font = new System.Drawing.Font("Segoe UI", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox2.Font = new System.Drawing.Font("Segoe UI", 28.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox2.Location = new Point(39, 129);
             textBox2.Margin = new Padding(3, 4, 3, 4);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(286, 329);
+            textBox2.Size = new Size(286, 380);
             textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(490, 39);
+            textBox3.Location = new Point(490, 120);
             textBox3.Margin = new Padding(3, 4, 3, 4);
             textBox3.Multiline = true;
             textBox3.Name = "textBox3";
@@ -78,7 +78,7 @@ namespace Playfair_cipher
             // textBox4
             // 
             textBox4.BackColor = SystemColors.ControlLight;
-            textBox4.Location = new Point(490, 249);
+            textBox4.Location = new Point(490, 313);
             textBox4.Margin = new Padding(3, 4, 3, 4);
             textBox4.Multiline = true;
             textBox4.Name = "textBox4";
@@ -133,7 +133,7 @@ namespace Playfair_cipher
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(487, 15);
+            label2.Location = new Point(490, 96);
             label2.Name = "label2";
             label2.Size = new Size(50, 20);
             label2.TabIndex = 8;
@@ -142,7 +142,7 @@ namespace Playfair_cipher
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(487, 222);
+            label3.Location = new Point(490, 289);
             label3.Name = "label3";
             label3.Size = new Size(64, 20);
             label3.TabIndex = 9;
@@ -169,7 +169,7 @@ namespace Playfair_cipher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1024, 458);
+            ClientSize = new Size(1024, 507);
             Controls.Add(comboBox1);
             Controls.Add(label4);
             Controls.Add(label3);
